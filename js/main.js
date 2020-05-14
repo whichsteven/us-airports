@@ -38,9 +38,14 @@ var airports = L.geoJson.ajax("assets/airports.geojson", {
 
   },
   pointToLayer: function(feature, latlng) {
+    icon_class = "fas fa-plane";
+    if (feature.properties.CNTL_TWR == "Y") {
+      icon_class = "far fa-dot-circle fa-xs";
+    }
+
     return L.marker(latlng, {
       icon: L.divIcon({
-        className: "fas fa-plane"
+        className: icon_class
       })
     });
   },
@@ -98,11 +103,15 @@ legend.onAdd = function() {
 
   // Create Div Element and Populate it with HTML
   var div = L.DomUtil.create('div', 'legend');
-  div.innerHTML += '<b># Airports in the state</b><br />';
-  div.innerHTML += '<i style="background: ' + colors[4] + '; opacity: 0.5"></i><p>40+</p>';
-  div.innerHTML += '<i style="background: ' + colors[3] + '; opacity: 0.5"></i><p>30-40</p>';
-  div.innerHTML += '<i style="background: ' + colors[2] + '; opacity: 0.5"></i><p>20-30</p>';
-  div.innerHTML += '<i style="background: ' + colors[1] + '; opacity: 0.5"></i><p>10-20</p>';
+  div.innerHTML += '<b>Whether the airport has control tower</b><br />';
+  div.innerHTML += '<i class="fas fa-plane-departure"></i><p>Airport with control tower</p>';
+  div.innerHTML += '<i class="far fa-dot-circle fa-xs"></i></i><p>Airport without control tower</p>';
+  div.innerHTML += '<br/>';
+  div.innerHTML += '<b># Airports in the state</b><br/>';
+  div.innerHTML += '<i style="background: ' + colors[4] + '; opacity: 0.5"></i><p>41+</p>';
+  div.innerHTML += '<i style="background: ' + colors[3] + '; opacity: 0.5"></i><p>31-40</p>';
+  div.innerHTML += '<i style="background: ' + colors[2] + '; opacity: 0.5"></i><p>21-30</p>';
+  div.innerHTML += '<i style="background: ' + colors[1] + '; opacity: 0.5"></i><p>11-20</p>';
   div.innerHTML += '<i style="background: ' + colors[0] + '; opacity: 0.5"></i><p> 0-10</p>';
   // Return the Legend div containing the HTML content
   return div;
